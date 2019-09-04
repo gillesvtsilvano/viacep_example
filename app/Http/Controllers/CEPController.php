@@ -12,25 +12,25 @@ class CEPController extends Controller
 
         $msg = array(
             "code" => 0,
-            "message" => 'Ok',
+            "message" => 'Ok.',
             "response" => '',
         );
-
         $zipCodeInfo = null;
 
         if (isset($request['cep'])){
+
             $zipCodeInfo = ZipCode::find($request['cep']);
 
             if (isset($zipCodeInfo) && !empty($zipCodeInfo)) {
-                $msg['response'] = $zipCodeInfo->getJson();
+                $msg['response'] = $zipCodeInfo->getArray();
             } else {
                 $msg['code'] = 1;
-                $msg['message'] = "CEP não encontrado";
+                $msg['message'] = "CEP não encontrado.";
             }
         } else {
             $msg['code'] = 2;
-            $msg['message'] = "Invalid request";
+            $msg['message'] = "Requisição malformatada.";
         }
-        return $msg;
+        return $msg;    // Laravel returns JSON by default
     }
 }
